@@ -41,9 +41,10 @@ style = [
 lint = [
     "pylint",
 ]
-dist = [
+ci = [
     "hatch",
     "hatch-regex-commit",
+    "genbadge[all]",
 ]
 
 [build-system]
@@ -96,7 +97,7 @@ scripts.typing = "mypy src/"
 features = [
     "test"
 ]
-scripts.cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=flying_discs --cov=tests {args}"
+scripts.cov = "pytest --cov-report=term-missing --cov-report xml:.coverage.xml --cov-config=pyproject.toml --cov=flying_discs --junitxml=.junit.xml {args}"
 scripts.no-cov = "cov --no-cov {args}"
 
 [tool.hatch.envs.tools]
@@ -107,7 +108,7 @@ dependencies = [
 
 [[tool.hatch.envs.test.matrix]]
 python = [
-    "310",
+    "3.8", "3.9", "310"
 ]
 
 [tool.black]
