@@ -6,7 +6,6 @@ import numpy as np
 from flying_discs.disc_position import DiscPosition
 from flying_discs.morrison.disc_morrison_base import DiscMorrison
 from flying_discs.morrison.morrison_constants import DiscMorrisonConstants
-from flying_discs.morrison.morrison_position import DiscMorrisonPosition
 from flying_discs.utils import angle_between_vectors, distance_v1_v2
 
 
@@ -20,21 +19,23 @@ class DiscMorrisonLinear(DiscMorrison):
         self.throw_aoa = 0.0
         self._aoa = 2.5
 
-    def _calculate_trajectory(
-        self, v0: float, alpha: float, deltaT: float, **kwargs: Any
-    ) -> Sequence[DiscMorrisonPosition]:
+    def _calculate_trajectory(self, v0: float, alpha: float, deltaT: float, **kwargs: Any) -> Sequence[DiscPosition]:
         trajectory = super()._calculate_trajectory(v0, alpha, deltaT)
         angle = kwargs["angle"]
-        point: DiscMorrisonPosition
+        point: DiscPosition
         for i, point in enumerate(trajectory):
             if i == 0:
-                point.vx = point.vd * math.cos(angle)
-                point.vy = point.vd * math.sin(angle)
+                new_vx = point.vy * math.cos(angle)
+                new_vy = point.vy * math.sin(angle)
+                point.vx = new_vx
+                point.vy = new_vy
                 point.x = self.x
                 point.y = self.y
                 continue
-            point.ax = point.ad * math.cos(angle)
-            point.ay = point.ad * math.sin(angle)
+            new_ax = point.ay * math.cos(angle)
+            new_ay = point.ay * math.sin(angle)
+            point.ax = new_ax
+            point.ay = new_ay
             point.vx = trajectory[i - 1].vx + point.ax
             point.vy = trajectory[i - 1].vy + point.ay
             point.x = trajectory[i - 1].x + point.vx * deltaT
@@ -63,7 +64,7 @@ class DiscMorrisonLinear(DiscMorrison):
 
     def _approximate_trajectory_to_target_x_y(
         self, x: float, y: float, timescale: float, **kwargs: Any
-    ) -> Tuple[Sequence[DiscMorrisonPosition], float, float]:
+    ) -> Tuple[Sequence[DiscPosition], float, float]:
         dist = distance_v1_v2(x, y, self.x, self.y)
         v0 = 0.0
         distance_traveled = -math.inf
@@ -72,8 +73,8 @@ class DiscMorrisonLinear(DiscMorrison):
             v0 += 0.1
             distance_traveled = -math.inf
             trajectory = self._calculate_trajectory(v0, self._aoa, timescale, **kwargs)
-            distance_traveled = trajectory[-1].d
-            d_ = np.array([p.d for p in trajectory])
+            distance_traveled = trajectory[-1].y
+            d_ = np.array([p.y for p in trajectory])
             idx = np.where(d_ > dist)[0]
             if idx.size > 0:
                 start_idx = idx[0]

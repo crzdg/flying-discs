@@ -1,9 +1,9 @@
 from copy import deepcopy
 from typing import Any, List, Sequence, Tuple
 
+from flying_discs.disc_position import DiscPosition
 from flying_discs.morrison.disc_morrison_linear import DiscMorrisonLinear
 from flying_discs.morrison.morrison_constants import DiscMorrisonConstants
-from flying_discs.morrison.morrison_position import DiscMorrisonPosition
 from flying_discs.utils import quadratic_bezier, rotate_points_around_mid_point
 
 
@@ -12,14 +12,14 @@ class DiscMorrisonBezier(DiscMorrisonLinear):
         # pylint : disable=too-many-instance-attributes
         super().__init__(constants, x, y, z)
         self._bezier_points: List[Tuple[float, float]] = []
-        self._linear_trajectory: Sequence[DiscMorrisonPosition] = []
+        self._linear_trajectory: Sequence[DiscPosition] = []
         self._rotated_points: List[Tuple[float, float]] = []
         self.rotation_angle: float = 0.0
         self.factor: float = 0.0
 
     @staticmethod
     def _determine_bezier_points(
-        trajectory: Sequence[DiscMorrisonPosition],
+        trajectory: Sequence[DiscPosition],
         rotated_points: List[Tuple[float, float]],
         tmax: int,
         factor: float,
@@ -34,9 +34,7 @@ class DiscMorrisonBezier(DiscMorrisonLinear):
         bezier_points = [(x0, y0), (x1, y1), (x2, y2)]
         return bezier_points
 
-    def _calculate_trajectory(
-        self, v0: float, alpha: float, deltaT: float, **kwargs: Any
-    ) -> Sequence[DiscMorrisonPosition]:
+    def _calculate_trajectory(self, v0: float, alpha: float, deltaT: float, **kwargs: Any) -> Sequence[DiscPosition]:
         trajectory = super()._calculate_trajectory(v0, alpha, deltaT, angle=kwargs["angle"])
         self._linear_trajectory = deepcopy(trajectory)
         rotated_points = rotate_points_around_mid_point(
@@ -64,7 +62,7 @@ class DiscMorrisonBezier(DiscMorrisonLinear):
 
         return trajectory
 
-    def calculate_trajectory(self, timescale: float, **kwargs: Any) -> None:
+    def calculate_trajectory(self, timescale: float, **kwargs: Any) -> Sequence[DiscPosition]:
         self.throw_direction = kwargs["direction"]
         self.throw_aoa = kwargs["alpha"]
         self.throw_power = kwargs["power"]
@@ -78,3 +76,9 @@ class DiscMorrisonBezier(DiscMorrisonLinear):
             rotation_angle=self.rotation_angle,
             factor=self.factor,
         )
+        return self.trajectory
+
+    def calculate_trajectory_to_position(
+        self, x: float, y: float, timescale: float, **kwargs: Any
+    ) -> Sequence[DiscPosition]:
+        raise NotImplementedError()
