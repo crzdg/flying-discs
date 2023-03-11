@@ -129,11 +129,6 @@ dmypy.json
 .pyre/
 
 # Project specific
-.wandb/
-*.zip
-*.ipynb
-wandb/
-experiments/
 
 .junit.xml
 .coverage.xml
