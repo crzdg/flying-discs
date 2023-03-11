@@ -1,6 +1,6 @@
 .PHONY: mypy lint test all
 
-all: mypy lint test
+all: style mypy lint test
 
 mypy:
 	@hatch run type:typing
@@ -10,6 +10,9 @@ lint:
 
 test:
 	@hatch run test:no-cov
+
+style:
+	@hatch run style:check
 
 update: pip-compile
 
