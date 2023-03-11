@@ -46,6 +46,11 @@ ci = [
     "hatch-regex-commit",
     "genbadge[all]",
 ]
+jupyter = [
+    "jupyter",
+    "jupytext",
+    "matplotlib"
+]
 
 [build-system]
 requires = ["hatchling", "hatch-regex-commit"]
@@ -73,12 +78,12 @@ features = [
     "style"
 ]
 scripts.check = [
-  "- black --check --diff .",
-  "isort --check-only --diff .",
+  "- black --check --diff src/",
+  "isort --check-only --diff src/"
 ]
 scripts.fmt = [
-  "black .",
-  "isort .",
+  "black src/",
+  "isort src/"
 ]
 
 [tool.hatch.envs.lint]
