@@ -1,3 +1,12 @@
+![License](https://img.shields.io/github/license/crzdg/flying-discs)
+![Last Commit](https://img.shields.io/github/last-commit/crzdg/flying-discs)
+![Coverage](https://raw.githubusercontent.com/gist/crzdg/629d8687524d945066e3335e00aa7543/raw/coverage-badge.svg)
+![Tests](https://raw.githubusercontent.com/gist/crzdg/5c06ab3ff426558fa98e978a39b76a55/raw/tests-badge.svg)
+![PyPI](https://img.shields.io/pypi/pyversions/flying-discs)
+![PyPI](https://img.shields.io/pypi/status/flying-discs)
+![PyPI](https://img.shields.io/pypi/v/flying-discs)
+![PyPI](https://img.shields.io/pypi/dm/flying-discs)
+
 # 🥏 Flying Discs
 
 This Python repository contains modules and algorithms that can calculate trajectories of flying sports discs. The repository includes non-physical and physical model based algorithms and parameterizations for calculating the trajectories.
