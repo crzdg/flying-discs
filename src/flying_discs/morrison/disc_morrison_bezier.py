@@ -1,6 +1,8 @@
 from copy import deepcopy
 from typing import Any, List, Sequence, Tuple
 
+import numpy as np
+
 from flying_discs.disc_position import DiscPosition
 from flying_discs.morrison.disc_morrison_linear import DiscMorrisonLinear
 from flying_discs.morrison.morrison_constants import DiscMorrisonConstants
@@ -26,7 +28,7 @@ class DiscMorrisonBezier(DiscMorrisonLinear):
     ) -> List[Tuple[float, float]]:
         x0 = trajectory[0].x
         y0 = trajectory[0].y
-        idx = int(tmax * factor)
+        idx = np.abs(int(tmax * factor))
         x1 = rotated_points[idx][0]
         y1 = rotated_points[idx][1]
         x2 = trajectory[-1].x
@@ -44,11 +46,12 @@ class DiscMorrisonBezier(DiscMorrisonLinear):
         self._rotated_points = rotated_points
 
         tmax = len(trajectory) - 1
+        factor = (kwargs["factor"] + 1) / 2
         self._bezier_points = self._determine_bezier_points(
             trajectory,
             rotated_points,
             tmax,
-            kwargs["factor"],
+            factor,
         )
         for t in range(tmax):
             x, y = quadratic_bezier(
