@@ -1,0 +1,118 @@
+[project]
+dynamic = ["version"]
+name = "flying-discs"
+license = "LGPL-3.0-only"
+license-files = { paths = ["LICENSE"] }
+readme = "README.md"
+description = "Implementation of physical models for flying sport discs."
+requires-python = ">=3.8"
+authors = [
+    { name = "Reto Barmettler"},
+]
+dependencies = [
+    "numpy==1.24.*",
+]
+classifiers =[
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+]
+
+[project.urls]
+Source = "https://github.com/crzdg/flying-discs"
+
+[project.optional-dependencies]
+dev = [
+    "hatch",
+]
+test = [
+    "pytest",
+    "pytest-mock",
+    "pytest-cov",
+]
+type = [
+    "mypy",
+    "types-PyYAML",
+]
+style = [
+    "black",
+    "isort",
+]
+lint = [
+    "pylint",
+]
+dist = [
+    "hatch",
+    "hatch-regex-commit",
+]
+
+[build-system]
+requires = ["hatchling", "hatch-regex-commit"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.github",
+    "/docs",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/flying_discs"
+]
+
+[tool.hatch]
+version.source = "regex_commit"
+version.path = "version.py"
+version.tag_sign = false
+
+
+[tool.hatch.envs.style]
+features = [
+    "style"
+]
+scripts.check = [
+  "- black --check --diff .",
+  "isort --check-only --diff .",
+]
+scripts.fmt = [
+  "black .",
+  "isort .",
+]
+
+[tool.hatch.envs.lint]
+features = [
+    "lint"
+]
+scripts.lint = "pylint --recursive=True src/"
+
+[tool.hatch.envs.type]
+features = [
+    "type"
+]
+scripts.typing = "mypy src/"
+
+[tool.hatch.envs.test]
+features = [
+    "test"
+]
+scripts.cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=flying_discs --cov=tests {args}"
+scripts.no-cov = "cov --no-cov {args}"
+
+[tool.hatch.envs.tools]
+scripts.update = "pip-compile {args} pyproject.toml"
+dependencies = [
+    "pip-tools"
+]
+
+[[tool.hatch.envs.test.matrix]]
+python = [
+    "310",
+]
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+multi_line_output = 3
+line_length = 120
