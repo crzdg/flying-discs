@@ -73,8 +73,12 @@ class DiscMorrisonLinear(DiscMorrison):
             v0 += 0.1
             distance_traveled = -math.inf
             trajectory = self._calculate_trajectory(v0, self._aoa, timescale, **kwargs)
-            distance_traveled = trajectory[-1].y
-            d_ = np.array([p.y for p in trajectory])
+            distance_traveled = float(
+                np.linalg.norm(
+                    [trajectory[-1].x, trajectory[-1].y],
+                )
+            )
+            d_ = np.array([np.linalg.norm([p.x, p.y]) for p in trajectory])
             idx = np.where(d_ > dist)[0]
             if idx.size > 0:
                 start_idx = idx[0]
