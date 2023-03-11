@@ -77,8 +77,3 @@ class DiscMorrisonBezier(DiscMorrisonLinear):
             factor=self.factor,
         )
         return self.trajectory
-
-    def calculate_trajectory_to_position(
-        self, x: float, y: float, timescale: float, **kwargs: Any
-    ) -> Sequence[DiscPosition]:
-        raise NotImplementedError()
