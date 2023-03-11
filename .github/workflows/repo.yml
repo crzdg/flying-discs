@@ -1,0 +1,49 @@
+---
+name: Repo
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  test-image:
+    name: Create badges
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.REPO_TOKEN }}
+          submodules: true
+
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+
+      - name: Install python dependencies
+        run: pip install ".[ci]" 
+
+      - name: Run tests with coverage
+        run: hatch run test:cov
+
+      - name: Create coverage badge
+        run: genbadge coverage -i .coverage.xml
+
+      - name: Create test badge
+        run: genbadge tests -i .junit.xml
+
+      - name: Upload coverage badge
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id: 629d8687524d945066e3335e00aa7543
+          file_path: coverage-badge.svg
+
+      - name: Upload tests badge
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gist_id:  5c06ab3ff426558fa98e978a39b76a55
+          file_path: tests-badge.svg
