@@ -9,7 +9,7 @@ from flying_discs.utils import (
     quadratic_bezier,
     rotate_points_around_index,
     rotate_points_around_mid_point,
-    rotate_points_around_origin
+    rotate_points_around_origin,
 )
 
 

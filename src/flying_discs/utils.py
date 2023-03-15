@@ -95,7 +95,7 @@ def rotate_points_around_origin(points: List, theta: float) -> List[Tuple[float,
 
 def rotate_points_around_index(points: List, theta: float, index: int) -> List[Tuple[float, float]]:
     """
-    Rotates a 1D-list around a given indenx by the given angle.
+    Rotates a 1D-list around a given index by the given angle.
 
 
     Args:

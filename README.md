@@ -5,7 +5,6 @@
 ![PyPI](https://img.shields.io/pypi/pyversions/flying-discs)
 ![PyPI](https://img.shields.io/pypi/status/flying-discs)
 ![PyPI](https://img.shields.io/pypi/v/flying-discs)
-![PyPI](https://img.shields.io/pypi/dm/flying-discs)
 
 # 🥏 Flying Discs
 
@@ -29,30 +28,29 @@ pip3 install flying-discs
 
 ### 👩‍🏫 Example
 
-Code examples and Jupyter notebooks can be found under [examples](examples/).
+Jupyter notebooks can be found under [notebooks](notebooks/).
 
 #### Morrison Example
 
 ```python
-from flying_discs.morrison.disc_morrison_linear import DiscMorrisonLinear
-from flying_discs.morrison.morrison_constants import DiscMorrisonUltrastar
+from flying_discs.morrison.constants import MorrisonUltrastar
+from flying_discs.morrison.coordinates import MorrisonPosition3D
+from flying_discs.morrison.linear import MorrisonLinearCalculator
 
-x0 = 0
-y0 = 0
-z0 = 1
+disc = MorrisonLinearCalculator(MorrisonUltrastar())
 
-disc = DiscMorrisonLinear(DiscMorrisonUltrastar(), x0, y0, z0)
+Z0 = 1
+TIMESCALE = 0.033
+ANGLE_OF_ATTACK = 5
+V0 = 14
+DIRECTION_ANGLE = 0
 
-timescale = 0.033
-angle_of_attack = 5
-v0 = 14
-direction = 0
-
-trajectory = disc.calculate_trajectory(
-    timescale,
-    alpha=angle_of_attack,
-    v0=v0,
-    direction=direction,
+throw = disc.calculate_trajectory(
+    MorrisonPosition3D(0, 0, Z0, 0, 0, 0, 0, 0, 0),
+    V0,
+    ANGLE_OF_ATTACK,
+    DIRECTION_ANGLE,
+    TIMESCALE,
 )
 ```
 
