@@ -1,6 +1,6 @@
 from copy import deepcopy
-from dataclasses import dataclass
-from typing import List, Sequence, Tuple
+from dataclasses import dataclass, field
+from typing import List, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -19,20 +19,25 @@ class MorrisonBezierThrowExtra:
 
 @dataclass
 class MorrisonBezierThrow:
+    # pylint: disable=too-many-instance-attributes
     trajectory: MorrisonTrajectory3D
     constants: MorrisonConstants
     initial_position: MorrisonPosition3D
     v0: float
     angle_of_attack: float
+    direction_angle: float
     intersect_angle: float
     factor: float
     deltaT: float
-    extras: MorrisonBezierThrowExtra
+    # make an exception for the compare for the extras for easier testing
+    # TODO: remove compare=False
+    extras: Optional[MorrisonBezierThrowExtra] = field(default=None, compare=False)
+    target_x: Optional[float] = None
+    target_y: Optional[float] = None
 
 
 class MorrisonBezierCalculator:
     def __init__(self, constants: MorrisonConstants) -> None:
-        # pylint : disable=too-many-instance-attributes
         self._linear_calculator = MorrisonLinearCalculator(constants)
         self.constants = constants
 
@@ -103,6 +108,7 @@ class MorrisonBezierCalculator:
             initial_position,
             v0,
             angle_of_attack,
+            direction_angle,
             intersect_angle,
             factor,
             deltaT,
@@ -129,8 +135,11 @@ class MorrisonBezierCalculator:
             initial_position,
             linear_throw.v0,
             angle_of_attack,
+            linear_throw.direction_angle,
             intersect_angle,
             factor,
             deltaT,
             extras,
+            target_x,
+            target_y,
         )

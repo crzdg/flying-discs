@@ -17,6 +17,7 @@ class MorrisonLinearThrow:
     initial_position: MorrisonPosition3D
     v0: float
     angle_of_attack: float
+    direction_angle: float
     deltaT: float
     target_x: Optional[float] = None
     target_y: Optional[float] = None
@@ -68,7 +69,13 @@ class MorrisonLinearCalculator:
                 )
             )
         return MorrisonLinearThrow(
-            MorrisonTrajectory3D(linear_trajectory), self.constants, initial_position, v0, angle_of_attack, deltaT
+            MorrisonTrajectory3D(linear_trajectory),
+            self.constants,
+            initial_position,
+            v0,
+            angle_of_attack,
+            direction_angle,
+            deltaT,
         )
 
     def calculate_trajectory_to_position(
@@ -106,6 +113,7 @@ class MorrisonLinearCalculator:
             initial_position,
             v0,
             angle_of_attack,
+            direction_angle,
             deltaT,
             target_x,
             target_y,

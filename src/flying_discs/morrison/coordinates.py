@@ -45,6 +45,9 @@ class MorrisonTrajectory2D:
     def __len__(self) -> int:
         return len(self.positions)
 
+    def __eq__(self, o: object) -> bool:
+        return self.positions == o
+
 
 @dataclass
 class MorrisonPosition3D:
@@ -91,3 +94,6 @@ class MorrisonTrajectory3D:
 
     def __len__(self) -> int:
         return len(self.positions)
+
+    def __eq__(self, o: object) -> bool:
+        return self.positions == o
