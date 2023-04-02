@@ -18,7 +18,6 @@ from dataclasses import dataclass
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 from flying_discs.morrison.base import MorrisonBaseCalculator
 from flying_discs.morrison.bezier import MorrisonBezierCalculator
 from flying_discs.morrison.constants import MorrisonUltrastar, MorrisonUltrastarCode
