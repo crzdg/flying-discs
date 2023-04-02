@@ -26,16 +26,16 @@ class MorrisonTrajectory2D:
         self.VZ = np.array([p.vz for p in self.positions])
         self.AX = np.array([p.ax for p in self.positions])
         self.AZ = np.array([p.az for p in self.positions])
+        self.__n = 0  # iterator count
 
     def __iter__(self) -> "MorrisonTrajectory2D":
-        # pylint: disable=attribute-defined-outside-init
-        self.n = 0
+        self.__n = 0
         return self
 
     def __next__(self) -> MorrisonPosition2D:
-        if self.n <= len(self.positions) - 1:
-            result = self.positions[self.n]
-            self.n += 1
+        if self.__n <= len(self.positions) - 1:
+            result = self.positions[self.__n]
+            self.__n += 1
             return result
         raise StopIteration
 
@@ -76,16 +76,16 @@ class MorrisonTrajectory3D:
         self.AX = np.array([p.ax for p in self.positions])
         self.AY = np.array([p.ay for p in self.positions])
         self.AZ = np.array([p.az for p in self.positions])
+        self.__n = 0  # iterator count
 
     def __iter__(self) -> "MorrisonTrajectory3D":
-        # pylint: disable=attribute-defined-outside-init
-        self.n = 0
+        self.__n = 0
         return self
 
     def __next__(self) -> MorrisonPosition3D:
-        if self.n <= len(self.positions) - 1:
-            result = self.positions[self.n]
-            self.n += 1
+        if self.__n <= len(self.positions) - 1:
+            result = self.positions[self.__n]
+            self.__n += 1
             return result
         raise StopIteration
 
