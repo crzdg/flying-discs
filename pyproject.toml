@@ -10,7 +10,7 @@ authors = [
     { name = "Reto Barmettler"},
 ]
 dependencies = [
-    "numpy==1.24.*",
+    "numpy>=1.22.0",
 ]
 classifiers =[
     "Programming Language :: Python :: 3",
