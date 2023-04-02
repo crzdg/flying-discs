@@ -31,7 +31,7 @@ def test_calculate_trajectory() -> None:
     v0 = 10
     throw = disc.calculate_trajectory(z0, v0, angle_of_attack, timescale)
 
-    expected_trajectory = [
+    expected_positions = [
         MorrisonPosition2D(x=0.0, z=z0, vx=v0, vz=0.0, ax=0.0, az=0.0),
         MorrisonPosition2D(
             x=0.9919651765304759,
@@ -84,10 +84,15 @@ def test_calculate_trajectory() -> None:
     ]
 
     assert throw == MorrisonBaseThrow(
-        MorrisonTrajectory2D(expected_trajectory),
+        MorrisonTrajectory2D(expected_positions),
         constants,
         z0,
         v0,
         angle_of_attack,
         timescale,
     )
+
+    # test trajectory getitem
+    assert throw.trajectory[0] == expected_positions[0]
+    # test trajectory length
+    assert len(throw.trajectory) == len(expected_positions)

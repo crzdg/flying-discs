@@ -101,6 +101,8 @@ def test_calculate_trajectory() -> None:
         factor,
         timescale,
     )
+    # test trajectory length
+    assert len(throw.trajectory) == len(expected_positions)
 
 
 def test_calculate_trajectory_to_position() -> None:
