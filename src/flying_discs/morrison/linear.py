@@ -5,7 +5,7 @@ from typing import List, Optional
 import numpy as np
 
 from flying_discs.morrison.base import MorrisonBaseCalculator
-from flying_discs.morrison.constants import MorrisonConstants
+from flying_discs.morrison.constants import Constants
 from flying_discs.morrison.coordinates import MorrisonPosition3D, MorrisonTrajectory3D
 from flying_discs.utils import angle_between_vectors, distance_v1_v2
 
@@ -13,7 +13,7 @@ from flying_discs.utils import angle_between_vectors, distance_v1_v2
 @dataclass
 class MorrisonLinearThrow:
     trajectory: MorrisonTrajectory3D
-    constants: MorrisonConstants
+    constants: Constants
     initial_position: MorrisonPosition3D
     v0: float
     angle_of_attack: float
@@ -25,7 +25,7 @@ class MorrisonLinearThrow:
 
 class MorrisonLinearCalculator:
     # pylint: disable = invalid-name,too-many-instance-attributes,too-many-locals
-    def __init__(self, constants: MorrisonConstants) -> None:
+    def __init__(self, constants: Constants) -> None:
         self._base_calculator = MorrisonBaseCalculator(constants)
         self.constants = constants
 

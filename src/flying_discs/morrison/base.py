@@ -3,14 +3,14 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-from flying_discs.morrison.constants import MorrisonConstants
+from flying_discs.morrison.constants import Constants
 from flying_discs.morrison.coordinates import MorrisonPosition2D, MorrisonTrajectory2D
 
 
 @dataclass
 class MorrisonBaseThrow:
     trajectory: MorrisonTrajectory2D
-    constants: MorrisonConstants
+    constants: Constants
     z0: float
     v0: float
     angle_of_attack: float
@@ -19,7 +19,7 @@ class MorrisonBaseThrow:
 
 class MorrisonBaseCalculator:
     # pylint: disable = invalid-name,too-many-instance-attributes,too-many-locals
-    def __init__(self, constants: MorrisonConstants) -> None:
+    def __init__(self, constants: Constants) -> None:
         self.constants = constants
 
     def calculate_trajectory_step(

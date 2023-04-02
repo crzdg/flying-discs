@@ -2,8 +2,8 @@ import math
 from abc import ABC
 
 
-class MorrisonConstants(ABC):
-    # pylint: disable = invalid-name, too-many-instance-attributes
+class Constants(ABC):
+    # pylint: disable = invalid-name
     GRAVITY = -9.81
     MASS = 0.175  # in kg
     RHO = 1.23
@@ -23,14 +23,12 @@ class MorrisonConstants(ABC):
         return cls.CD0 + cls.CDalpha * math.pow(math.radians(alpha - cls.ALPHA0), 2)
 
 
-class MorrisonUltrastar(MorrisonConstants):
-    # pylint: disable = invalid-name
+class MorrisonUltrastar(Constants):
     RADIUS = 0.14  # in m
     MASS = 0.175  # in kg
     # A = RADIUS**2 * math.pi
 
 
 class MorrisonUltrastarCode(MorrisonUltrastar):
-    # pylint: disable = invalid-name
     # The paper do use a different CL0 value in the code then in the showed calculations.
     CL0 = 0.1
