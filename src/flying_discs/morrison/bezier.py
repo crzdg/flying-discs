@@ -4,7 +4,7 @@ from typing import List, Optional, Sequence, Tuple
 
 import numpy as np
 
-from flying_discs.morrison.constants import MorrisonConstants
+from flying_discs.morrison.constants import Constants
 from flying_discs.morrison.coordinates import MorrisonPosition3D, MorrisonTrajectory3D
 from flying_discs.morrison.linear import MorrisonLinearCalculator
 from flying_discs.utils import quadratic_bezier, rotate_points_around_mid_point
@@ -21,7 +21,7 @@ class MorrisonBezierThrowExtra:
 class MorrisonBezierThrow:
     # pylint: disable=too-many-instance-attributes
     trajectory: MorrisonTrajectory3D
-    constants: MorrisonConstants
+    constants: Constants
     initial_position: MorrisonPosition3D
     v0: float
     angle_of_attack: float
@@ -37,7 +37,7 @@ class MorrisonBezierThrow:
 
 
 class MorrisonBezierCalculator:
-    def __init__(self, constants: MorrisonConstants) -> None:
+    def __init__(self, constants: Constants) -> None:
         self._linear_calculator = MorrisonLinearCalculator(constants)
         self.constants = constants
 
