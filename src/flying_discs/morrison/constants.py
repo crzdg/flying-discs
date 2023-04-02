@@ -32,3 +32,38 @@ class MorrisonUltrastar(Constants):
 class MorrisonUltrastarCode(MorrisonUltrastar):
     # The paper do use a different CL0 value in the code then in the showed calculations.
     CL0 = 0.1
+
+
+class HummelConstants(Constants):
+    CL0 = 0.33
+    CLalpha = 1.91
+    CD0 = 0.18
+    CDalpha = 0.69
+
+
+class PottsCrowtherConstants(Constants):
+    CL0 = 0.2
+    CLalpha = 2.96
+    CD0 = 0.08
+    CDalpha = 2.72
+
+
+class YasudaConstants(Constants):
+    CL0 = 0.08
+    CLalpha = 2.4
+    CD0 = 0.1
+    CDalpha = 2.3
+
+
+class StilleyCarstensConstants(Constants):
+    CL0 = 0.15
+    CLalpha = 2.8
+    CD0 = 0.1
+    CDalpha = 2.5
+
+
+class HannahConstants(Constants):
+    CL0 = 0.33
+    CLalpha = 1.9
+    CD0 = 0.18
+    CDalpha = 0.69

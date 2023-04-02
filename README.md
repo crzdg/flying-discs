@@ -16,7 +16,21 @@ This project can be used by researchers, sports enthusiasts, and anyone interest
 
 ## 🔬 Included disc models
 
-- [x] [V. Morrison, “The physics of frisbees”, Electronic Journal of Classical Mechanics and Relativity, vol. 8, no. 48, 2005](http://web.mit.edu/womens-ult/www/smite/frisbee_physics.pdf)
+#### V. Morrison, “The physics of frisbees,” Mount Allison University Physics Department, vol. 1, 2005.
+
+The [Morrison](src/flying_discs/morrison) model is a Euler approximation of [S. A. Hummel, Frisbee Flight Simulation and Throw Biomechanics. University of California, Davis, 2003.](https://books.google.ch/books?id=KQlA7DJ323MC)
+
+##### Constants
+
+- **G. Stilley and D. Carstens**, “Adaptation of the Frisbee flight principle to delivery of special ordnance,” in 2nd Atmospheric Flight Mechanics Conference, in Guidance, Navigation, and Control and Co-located Conferences. American Institute of Aeronautics and Astronautics, 1972. doi: 10.2514/6.1972-982.
+- **K. Yasuda**, “Flight and aerodynamic characteristics of a flying disk,” Japanese Soc. Aero. Space Sci, vol. 47, no. 547, pp. 16–22, 1999.
+- **S. A. Hummel**, Frisbee Flight Simulation and Throw Biomechanics. University of California, Davis, 2003.
+- **V. Morrison**, “The physics of frisbees,” Mount Allison University Physics Department, vol. 1, 2005.
+- **W. J. Crowther** and J. R. Potts, “Simulation of a spin-stabilised sports disc,” Sports Engineering, vol. 10, no. 1, pp. 3–21, 2007.
+- **L. Hannah**, “Constraining Frisbee Tracking Methods Through Bayesian Analysis of Flying Disc Models,” 2017.
+
+
+
 
 ## 🚀 Get Started
 
