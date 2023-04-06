@@ -13,7 +13,11 @@ dependencies = [
     "numpy>=1.22.0",
 ]
 classifiers =[
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
 ]
@@ -92,11 +96,21 @@ features = [
 ]
 scripts.lint = "pylint --recursive=True src/"
 
+[[tool.hatch.envs.lint.matrix]]
+python = [
+    "311"
+]
+
 [tool.hatch.envs.type]
 features = [
     "type"
 ]
 scripts.typing = "mypy src/"
+
+[[tool.hatch.envs.type.matrix]]
+python = [
+    "38", "39", "310", "311"
+]
 
 [tool.hatch.envs.test]
 features = [
@@ -105,15 +119,15 @@ features = [
 scripts.cov = "pytest --cov-report=term-missing --cov-report xml:.coverage.xml --cov-config=pyproject.toml --cov=flying_discs --junitxml=.junit.xml {args}"
 scripts.no-cov = "cov --no-cov {args}"
 
+[[tool.hatch.envs.test.matrix]]
+python = [
+    "38", "39", "310", "311"
+]
+
 [tool.hatch.envs.tools]
 scripts.update = "pip-compile {args} pyproject.toml"
 dependencies = [
     "pip-tools"
-]
-
-[[tool.hatch.envs.test.matrix]]
-python = [
-    "3.8", "3.9", "310"
 ]
 
 [tool.black]
