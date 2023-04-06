@@ -8,16 +8,15 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.14.5
 #   kernelspec:
-#     display_name: Python 3 (ipykernel)
+#     display_name: flying-discs
 #     language: python
-#     name: python3
+#     name: flyingdiscs
 # ---
 
 # %%
 from dataclasses import dataclass
 
 import matplotlib.pyplot as plt
-import numpy as np
 from flying_discs.morrison.base import MorrisonBaseCalculator
 from flying_discs.morrison.constants import (
     HannahConstants,

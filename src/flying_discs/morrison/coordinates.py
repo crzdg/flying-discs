@@ -8,12 +8,22 @@ import numpy as np
 
 @dataclass
 class MorrisonPosition2D:
-    x: float
-    z: float
-    vx: float
-    vz: float
-    ax: float
-    az: float
+    def __init__(
+        self,
+        *,
+        x: float = 0.0,
+        z: float = 0.0,
+        vx: float = 0.0,
+        vz: float = 0.0,
+        ax: float = 0.0,
+        az: float = 0.0,
+    ):
+        self.x = x
+        self.z = z
+        self.vx = vx
+        self.vz = vz
+        self.ax = ax
+        self.az = az
 
 
 class MorrisonTrajectory2D:
@@ -51,15 +61,28 @@ class MorrisonTrajectory2D:
 
 @dataclass
 class MorrisonPosition3D:
-    x: float
-    y: float
-    z: float
-    vx: float
-    vy: float
-    vz: float
-    ax: float
-    ay: float
-    az: float
+    def __init__(
+        self,
+        *,
+        x: float = 0.0,
+        y: float = 0.0,
+        z: float = 0.0,
+        vx: float = 0.0,
+        vy: float = 0.0,
+        vz: float = 0.0,
+        ax: float = 0.0,
+        ay: float = 0.0,
+        az: float = 0.0,
+    ):
+        self.x = x
+        self.y = y
+        self.z = z
+        self.vx = vx
+        self.vy = vy
+        self.vz = vz
+        self.ax = ax
+        self.ay = ay
+        self.az = az
 
 
 class MorrisonTrajectory3D:

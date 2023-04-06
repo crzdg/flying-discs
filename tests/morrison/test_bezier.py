@@ -15,7 +15,7 @@ def test_calculate_trajectory() -> None:
     direction_angle = math.radians(45)
     intersect_angle = math.radians(90)
     factor = 0.5
-    initial_position = MorrisonPosition3D(0, 0, z0, 0, 0, 0, 0, 0, 0)
+    initial_position = MorrisonPosition3D(z=z0)
     throw = disc.calculate_trajectory(
         initial_position, v0, angle_of_attack, direction_angle, intersect_angle, factor, timescale
     )
@@ -113,7 +113,7 @@ def test_calculate_trajectory_to_position() -> None:
     z0 = 1
     intersect_angle = math.radians(90)
     factor = 0.5
-    initial_position = MorrisonPosition3D(0, 0, z0, 0, 0, 0, 0, 0, 0)
+    initial_position = MorrisonPosition3D(z=z0)
     throw = disc.calculate_trajectory_to_position(
         initial_position, angle_of_attack, intersect_angle, factor, 10, 10, timescale
     )

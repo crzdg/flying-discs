@@ -13,10 +13,10 @@ def test_calculate_trajectory() -> None:
     timescale = 0.1
     z0 = 1
     v0 = 10
-    initial_position = MorrisonPosition3D(0, 0, z0, 0, 0, 0, 0, 0, 0)
+    initial_position = MorrisonPosition3D(z=z0)
     throw = disc.calculate_trajectory(initial_position, v0, angle_of_attack, direction_angle, timescale)
     expected_positions = [
-        MorrisonPosition3D(x=0, y=0, z=1, vx=6.123233995736766e-16, vy=10.0, vz=0.0, ax=0.0, ay=0.0, az=0.0),
+        MorrisonPosition3D(z=1, vx=6.123233995736766e-16, vy=10.0),
         MorrisonPosition3D(
             x=6.074034891518432e-17,
             y=0.9919651765304759,
@@ -101,11 +101,11 @@ def test_calculate_trajectory_to_position() -> None:
     angle_of_attack = 2.5
     timescale = 0.1
     z0 = 1
-    initial_position = MorrisonPosition3D(0, 0, z0, 0, 0, 0, 0, 0, 0)
+    initial_position = MorrisonPosition3D(z=z0)
     throw = disc.calculate_trajectory_to_position(initial_position, angle_of_attack, 10, 10, timescale)
 
     expected_positions = [
-        MorrisonPosition3D(x=0, y=0, z=1, vx=10.32375900532357, vy=10.323759005323568, vz=0.0, ax=0.0, ay=0.0, az=0.0),
+        MorrisonPosition3D(z=1, vx=10.32375900532357, vy=10.323759005323568),
         MorrisonPosition3D(
             x=1.020265261684503,
             y=1.0202652616845027,

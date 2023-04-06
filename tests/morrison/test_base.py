@@ -13,12 +13,12 @@ def test_calculate_trajectory_step() -> None:
     next_step = disc.calculate_trajectory_step(0, 1, 10, 0, CD, CL, timescale)
 
     assert next_step == MorrisonPosition2D(
-        0.9852526510998534,
-        0.9248566384843551,
-        9.852526510998533,
-        -0.7514336151564497,
-        -0.14747348900146615,
-        -0.7514336151564497,
+        x=0.9852526510998534,
+        z=0.9248566384843551,
+        vx=9.852526510998533,
+        vz=-0.7514336151564497,
+        ax=-0.14747348900146615,
+        az=-0.7514336151564497,
     )
 
 
@@ -32,7 +32,7 @@ def test_calculate_trajectory() -> None:
     throw = disc.calculate_trajectory(z0, v0, angle_of_attack, timescale)
 
     expected_positions = [
-        MorrisonPosition2D(x=0.0, z=z0, vx=v0, vz=0.0, ax=0.0, az=0.0),
+        MorrisonPosition2D(),
         MorrisonPosition2D(
             x=0.9919651765304759,
             z=0.9440352825718474,

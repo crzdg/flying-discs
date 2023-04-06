@@ -60,7 +60,7 @@ V0 = 14
 DIRECTION_ANGLE = 0
 
 throw = disc.calculate_trajectory(
-    MorrisonPosition3D(0, 0, Z0, 0, 0, 0, 0, 0, 0),
+    MorrisonPosition3D(z=Z0),
     V0,
     ANGLE_OF_ATTACK,
     DIRECTION_ANGLE,

@@ -8,9 +8,9 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.14.5
 #   kernelspec:
-#     display_name: Python 3 (ipykernel)
+#     display_name: flying-discs
 #     language: python
-#     name: python3
+#     name: flyingdiscs
 # ---
 
 # %%
@@ -18,6 +18,7 @@ from dataclasses import dataclass
 
 import matplotlib.pyplot as plt
 import numpy as np
+
 from flying_discs.morrison.base import MorrisonBaseCalculator
 from flying_discs.morrison.bezier import MorrisonBezierCalculator
 from flying_discs.morrison.constants import MorrisonUltrastar, MorrisonUltrastarCode
@@ -73,7 +74,7 @@ TARGET_X = 25
 TARGET_Y = 25
 
 disc = MorrisonLinearCalculator(MorrisonUltrastar())
-initial_position = MorrisonPosition3D(0, 0, 1, 0, 0, 0, 0, 0, 0)
+initial_position = MorrisonPosition3D(z=1)
 angle_of_attack = 2.5
 deltaT = 0.033
 throw = disc.calculate_trajectory_to_position(initial_position, angle_of_attack, TARGET_X, TARGET_Y, deltaT)
@@ -112,7 +113,7 @@ bezier_experiments = [
 fig = plt.figure(figsize=(12, 10))
 for i, bezier_experiment in enumerate(bezier_experiments):
     disc = MorrisonBezierCalculator(MorrisonUltrastar())
-    initial_position = MorrisonPosition3D(0, 0, 1, 0, 0, 0, 0, 0, 0)
+    initial_position = MorrisonPosition3D(z=1)
     angle_of_attack = 2.5
     deltaT = 0.033
     throw = disc.calculate_trajectory_to_position(

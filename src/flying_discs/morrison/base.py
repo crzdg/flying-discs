@@ -34,7 +34,14 @@ class MorrisonBaseCalculator:
         next_vz = vz + az
         next_x = x + next_vx * deltaT
         next_z = z + next_vz * deltaT
-        return MorrisonPosition2D(next_x, next_z, next_vx, next_vz, ax, az)
+        return MorrisonPosition2D(
+            x=next_x,
+            z=next_z,
+            vx=next_vx,
+            vz=next_vz,
+            ax=ax,
+            az=az,
+        )
 
     def calculate_trajectory(
         self,
@@ -45,7 +52,7 @@ class MorrisonBaseCalculator:
     ) -> MorrisonBaseThrow:
         CL = self.constants.CL(alpha=angle_of_attack)
         CD = self.constants.CD(alpha=angle_of_attack)
-        trajectory = [MorrisonPosition2D(0.0, z0, v0, 0.0, 0.0, 0.0)]
+        trajectory = [MorrisonPosition2D(z=z0, vx=v0)]
         while trajectory[-1].z > 0:
             current_step = trajectory[-1]
             next_position = self.calculate_trajectory_step(

@@ -45,15 +45,15 @@ class MorrisonLinearCalculator:
             if i == 0:
                 linear_trajectory.append(
                     MorrisonPosition3D(
-                        initial_position.x,
-                        initial_position.y,
-                        initial_position.z,
-                        base_position.vx * math.cos(direction_angle),
-                        base_position.vx * math.sin(direction_angle),
-                        base_position.vz,
-                        base_position.ax * math.cos(direction_angle),
-                        base_position.ax * math.sin(direction_angle),
-                        base_position.az,
+                        x=initial_position.x,
+                        y=initial_position.y,
+                        z=initial_position.z,
+                        vx=base_position.vx * math.cos(direction_angle),
+                        vy=base_position.vx * math.sin(direction_angle),
+                        vz=base_position.vz,
+                        ax=base_position.ax * math.cos(direction_angle),
+                        ay=base_position.ax * math.sin(direction_angle),
+                        az=base_position.az,
                     )
                 )
                 continue
@@ -65,7 +65,15 @@ class MorrisonLinearCalculator:
             new_y = linear_trajectory[i - 1].y + new_vy * deltaT
             linear_trajectory.append(
                 MorrisonPosition3D(
-                    new_x, new_y, base_position.z, new_vx, new_vy, base_position.vz, new_ax, new_ay, base_position.az
+                    x=new_x,
+                    y=new_y,
+                    z=base_position.z,
+                    vx=new_vx,
+                    vy=new_vy,
+                    vz=base_position.vz,
+                    ax=new_ax,
+                    ay=new_ay,
+                    az=base_position.az,
                 )
             )
         return MorrisonLinearThrow(
