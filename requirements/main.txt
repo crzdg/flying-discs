@@ -4,4 +4,6 @@
 #
 #    pip-compile --annotation-style=line --output-file=requirements/main.txt --resolver=backtracking pyproject.toml
 #
-numpy==1.24.2             # via flying-discs (pyproject.toml)
+frispy @ git+https://github.com/crzdg/FrisPy@fixes-and-py311  # via flying-discs (pyproject.toml)
+numpy==1.24.2             # via flying-discs (pyproject.toml), frispy, scipy
+scipy==1.10.1             # via frispy
