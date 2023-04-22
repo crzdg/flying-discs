@@ -18,6 +18,7 @@ distlib==0.3.6            # via virtualenv
 editables==0.3            # via hatchling
 exceptiongroup==1.1.0     # via pytest
 filelock==3.9.0           # via virtualenv
+frispy @ git+https://github.com/crzdg/FrisPy@fixes-and-py311  # via flying-discs (pyproject.toml)
 h11==0.14.0               # via httpcore
 hatch==1.6.3              # via flying-discs (pyproject.toml)
 hatchling==1.13.0         # via hatch
@@ -38,7 +39,7 @@ mdurl==0.1.2              # via markdown-it-py
 more-itertools==9.1.0     # via jaraco-classes
 mypy==1.1.1               # via flying-discs (pyproject.toml)
 mypy-extensions==1.0.0    # via black, mypy
-numpy==1.24.2             # via flying-discs (pyproject.toml)
+numpy==1.24.2             # via flying-discs (pyproject.toml), frispy, scipy
 packaging==23.0           # via black, hatch, hatchling, pytest
 pathspec==0.11.0          # via black, hatchling
 pexpect==4.8.0            # via hatch
@@ -54,6 +55,7 @@ pytest-cov==4.0.0         # via flying-discs (pyproject.toml)
 pytest-mock==3.10.0       # via flying-discs (pyproject.toml)
 rfc3986[idna2008]==1.5.0  # via httpx
 rich==13.3.2              # via hatch
+scipy==1.10.1             # via frispy
 secretstorage==3.3.3      # via keyring
 shellingham==1.5.0.post1  # via hatch
 sniffio==1.3.0            # via anyio, httpcore, httpx

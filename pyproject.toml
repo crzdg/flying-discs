@@ -5,22 +5,25 @@ license = "LGPL-3.0-only"
 license-files = { paths = ["LICENSE"] }
 readme = "README.md"
 description = "Implementation of physical models for flying sport discs."
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [
     { name = "Reto Barmettler"},
 ]
 dependencies = [
     "numpy>=1.22.0",
+    "frispy @ git+https://github.com/crzdg/FrisPy@fixes-and-py311",
 ]
 classifiers =[
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
 ]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [project.urls]
 Source = "https://github.com/crzdg/flying-discs"
@@ -109,7 +112,7 @@ scripts.typing = "mypy src/"
 
 [[tool.hatch.envs.type.matrix]]
 python = [
-    "38", "39", "310", "311"
+    "39", "310", "311"
 ]
 
 [tool.hatch.envs.test]
@@ -121,7 +124,7 @@ scripts.no-cov = "cov --no-cov {args}"
 
 [[tool.hatch.envs.test.matrix]]
 python = [
-    "38", "39", "310", "311"
+    "39", "310", "311"
 ]
 
 [tool.hatch.envs.tools]

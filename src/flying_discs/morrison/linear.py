@@ -1,18 +1,20 @@
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Optional
 
 import numpy as np
 
 from flying_discs.morrison.base import MorrisonBaseCalculator
 from flying_discs.morrison.constants import Constants
-from flying_discs.morrison.coordinates import MorrisonPosition3D, MorrisonTrajectory3D
+from flying_discs.morrison.coordinates import MorrisonPosition3D, MorrisonTrajectory2D, MorrisonTrajectory3D
 from flying_discs.utils import angle_between_vectors, distance_v1_v2
 
 
 @dataclass
 class MorrisonLinearThrow:
+    # pylint: disable=too-many-instance-attributes
     trajectory: MorrisonTrajectory3D
+    base_trajectory: MorrisonTrajectory2D = field(compare=False)
     constants: Constants
     initial_position: MorrisonPosition3D
     v0: float
@@ -24,7 +26,7 @@ class MorrisonLinearThrow:
 
 
 class MorrisonLinearCalculator:
-    # pylint: disable = invalid-name,too-many-instance-attributes,too-many-locals
+    # pylint: disable=invalid-name,too-many-instance-attributes,too-many-locals
     def __init__(self, constants: Constants) -> None:
         self._base_calculator = MorrisonBaseCalculator(constants)
         self.constants = constants
@@ -78,6 +80,7 @@ class MorrisonLinearCalculator:
             )
         return MorrisonLinearThrow(
             MorrisonTrajectory3D(linear_trajectory),
+            base_trajectory,
             self.constants,
             initial_position,
             v0,
@@ -102,9 +105,8 @@ class MorrisonLinearCalculator:
         while distance_traveled < dist or height_at_target < 0:
             v0 += 0.1
             distance_traveled = -math.inf
-            trajectory = self.calculate_trajectory(
-                initial_position, v0, angle_of_attack, direction_angle, deltaT
-            ).trajectory
+            base_throw = self.calculate_trajectory(initial_position, v0, angle_of_attack, direction_angle, deltaT)
+            trajectory = base_throw.trajectory
             distance_traveled = float(
                 np.linalg.norm(
                     [trajectory[-1].x, trajectory[-1].y],
@@ -117,6 +119,7 @@ class MorrisonLinearCalculator:
                 height_at_target = trajectory[start_idx].z
         return MorrisonLinearThrow(
             trajectory,
+            base_throw.base_trajectory,
             self.constants,
             initial_position,
             v0,
