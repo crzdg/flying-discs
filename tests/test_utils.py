@@ -25,6 +25,8 @@ def test_distance_v1_v2() -> None:
     assert distance_v1_v2(*(10, 10), *(10, 10)) == 0
     assert distance_v1_v2(*(10, 10), *(0, 0)) == pytest.approx(14.142136)
     assert distance_v1_v2(*(10, 10), *(-10, -10)) == pytest.approx(28.284271)
+    assert distance_v1_v2(*(10, 10), *(-10, 10)) == pytest.approx(20)
+    assert distance_v1_v2(*(10, 10), *(10, -10)) == pytest.approx(20)
 
 
 def test_quadratic_bezier() -> None:

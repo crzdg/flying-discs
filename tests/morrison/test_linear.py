@@ -86,6 +86,7 @@ def test_calculate_trajectory() -> None:
     ]
     assert throw == MorrisonLinearThrow(
         MorrisonTrajectory3D(expected_positions),
+        MorrisonTrajectory3D(expected_positions),
         constants,
         initial_position,
         v0,
@@ -240,6 +241,7 @@ def test_calculate_trajectory_to_position() -> None:
         ),
     ]
     assert throw == MorrisonLinearThrow(
+        MorrisonTrajectory3D(expected_positions),
         MorrisonTrajectory3D(expected_positions),
         constants,
         initial_position,
