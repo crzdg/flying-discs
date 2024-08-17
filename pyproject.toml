@@ -11,7 +11,7 @@ authors = [
 ]
 dependencies = [
     "numpy>=1.22.0",
-    "frispy @ git+https://github.com/crzdg/FrisPy@fixes-and-py311",
+    "frispy"
 ]
 classifiers =[
     "Programming Language :: Python :: 3 :: Only",
@@ -55,7 +55,6 @@ ci = [
 ]
 jupyter = [
     "jupyter",
-    "jupytext",
     "matplotlib"
 ]
 

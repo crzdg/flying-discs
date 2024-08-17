@@ -133,3 +133,4 @@ dmypy.json
 .junit.xml
 .coverage.xml
 *.svg
+.virtual_documents/
