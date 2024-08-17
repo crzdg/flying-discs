@@ -26,7 +26,6 @@ jobs:
             3.11
             3.10
             3.9
-            3.8
 
       - name: Install python dependencies
         run: pip install -r requirements/dev.txt

@@ -61,6 +61,7 @@ class MorrisonTrajectory2D:
 
 @dataclass
 class MorrisonPosition3D:
+    # pylint: disable=too-many-arguments
     def __init__(
         self,
         *,
