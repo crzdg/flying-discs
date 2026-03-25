@@ -31,6 +31,9 @@ jobs:
       - name: Install python dependencies
         run: pip install -r requirements/dev.txt
 
+      - name: Run style checking
+        run: make style
+
       - name: Run type checking
         run: make mypy
 
