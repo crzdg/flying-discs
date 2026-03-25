@@ -3,13 +3,13 @@
 all: style mypy lint test
 
 mypy:
-	@hatch run type:typing
+	@hatch run dev:typing
 
 lint:
-	@hatch run lint:lint
+	@hatch run dev:lint
 
 test:
-	@hatch run test:no-cov
+	@hatch run dev:no-cov
 
 style:
 	@hatch run style:check

@@ -95,36 +95,16 @@ scripts.fmt = [
   "isort src/"
 ]
 
-[tool.hatch.envs.lint]
+[tool.hatch.envs.dev]
 features = [
-    "lint"
+    "lint", "type", "test"
 ]
 scripts.lint = "pylint --recursive=True src/"
-
-[[tool.hatch.envs.lint.matrix]]
-python = [
-    "310", "311", "312", "313", "314"
-]
-
-[tool.hatch.envs.type]
-features = [
-    "type"
-]
 scripts.typing = "mypy src/"
-
-[[tool.hatch.envs.type.matrix]]
-python = [
-    "310", "311", "312", "313", "314"
-]
-
-[tool.hatch.envs.test]
-features = [
-    "test"
-]
 scripts.cov = "pytest --cov-report=term-missing --cov-report xml:.coverage.xml --cov-config=pyproject.toml --cov=flying_discs --junitxml=.junit.xml {args}"
 scripts.no-cov = "cov --no-cov {args}"
 
-[[tool.hatch.envs.test.matrix]]
+[[tool.hatch.envs.dev.matrix]]
 python = [
     "310", "311", "312", "313", "314"
 ]
