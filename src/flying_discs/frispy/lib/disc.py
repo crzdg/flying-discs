@@ -1,6 +1,3 @@
-# From: https://raw.githubusercontent.com/tmcclintock/FrisPy/refs/heads/main/frispy/disc.py
-"""Disc class."""
-
 from dataclasses import dataclass, field
 from typing import Any, Dict, Tuple, Type
 
@@ -47,9 +44,9 @@ class Disc:
         eom: equations of motion
     """
 
-    x: float = 0  # m / s
-    y: float = 0  # m / s
-    z: float = 1.0  # m / s
+    x: float = 0  # m
+    y: float = 0  # m
+    z: float = 1.0  # m
     vx: float = 10.0  # m / s
     vy: float = 0  # m / s
     vz: float = 0  # m / s
@@ -74,7 +71,7 @@ class Disc:
         n_times: int = 100,
         **solver_kwargs: Any,
     ) -> Tuple[Dict[str, np.ndarray], OptimizeResult]:
-        """Call the differential equation solver to computethe trajectory.
+        """Call the differential equation solver to compute the trajectory.
 
         The kinematic variables and timesteps are saved
         as the `current_trajectory` attribute, which is a dictionary,
@@ -86,8 +83,8 @@ class Disc:
 
         .. warning::
 
-           You cannot pass a `flight_time` if `t_span` is a key in
-           `solver_args`.
+           `flight_time` is ignored if `t_span` is a key in
+           `solver_kwargs`.
 
         Args:
             flight_time: time in seconds that the simulation
@@ -95,11 +92,11 @@ class Disc:
             n_times: Number of samples in time for the trajectory.
                 Samples are spaced evenly in time from ``(0, flight_time)``.
             solver_kwargs: extra keyword arguments to pass
-                to the :meth:`scipy.integrate.solver_ivp`
+                to the :meth:`scipy.integrate.solve_ivp`
 
         Returns:
             first element is a dict of all kinematic variables and the
-            second is the ``solver_ivp`` results object
+            second is the ``solve_ivp`` results object
         """
         # Pop out these kwargs and take defaults based on our API
         t_span: tuple[float, float] = solver_kwargs.pop("t_span", (0, flight_time))

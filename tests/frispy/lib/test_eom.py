@@ -70,7 +70,7 @@ class TestEOM(TestCase):
         eom = EOM(**self.kwargs)
         geometric_quantities = eom.geometric_quantities(self.phi, self.theta, self.vel, self.ang_vel)
         result = eom.compute_forces(self.vel, geometric_quantities)
-        assert all(result.total == result.acc * eom.mass)
+        npt.assert_allclose(result.total, result.acc * eom.mass)
 
     def test_compute_torques_smoke(self):
         eom = EOM(**self.kwargs)

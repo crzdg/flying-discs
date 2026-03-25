@@ -1,6 +1,3 @@
-# From: https://raw.githubusercontent.com/tmcclintock/FrisPy/refs/heads/main/frispy/model.py
-"""Physical model for the forces and torques on a disc."""
-
 from dataclasses import dataclass
 
 import numpy as np
@@ -87,7 +84,7 @@ class Model:
         return self.PTxwx * wx + self.PTxwz * wz
 
     def y(self, alpha: float, wy: float) -> float:
-        """Toruq scalef actor around y-hat.
+        """Torque scale factor around y-hat.
 
         Linearly in the y angular velocity
         (``w_y``) and the angle of attack (``alpha``).

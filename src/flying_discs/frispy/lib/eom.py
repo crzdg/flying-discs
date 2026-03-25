@@ -1,6 +1,3 @@
-# From: https://raw.githubusercontent.com/tmcclintock/FrisPy/refs/heads/main/frispy/equations_of_motion.py
-"""Equations of motion."""
-
 from dataclasses import dataclass
 
 import numpy as np
@@ -79,6 +76,9 @@ class EOM:
         mass: float,
         air_density: float = 1.225,
         g: float = 9.81,
+        # TODO: State handling of the model.
+        # Also see constants.py
+        # SEE: https://github.com/crzdg/flying-discs/pull/16#discussion_r2991607292
         model: Model = Model(),
     ):
         """Constructor."""
@@ -105,7 +105,7 @@ class EOM:
 
     @staticmethod
     def rotation_matrix(sp: float, cp: float, st: float, ct: float) -> np.ndarray:
-        """Compute the rotaiton matrix.
+        """Compute the rotation matrix.
 
         Compute the (partial) rotation matrix that transforms from the
         lab frame to the disc frame. Note that because of azimuthal
@@ -127,6 +127,8 @@ class EOM:
         velocity: np.ndarray,
     ) -> tuple[float, float, float, float, float, np.ndarray, float, np.ndarray]:
         """Compute the angle of attack."""
+        # TODO: Does not guard against zhat (norm == 0)
+        # SEE: https://github.com/crzdg/flying-discs/pull/16#discussion_r2991607301
         # Rotation matrix
         sp, cp = np.sin(phi), np.cos(phi)
         st, ct = np.sin(theta), np.cos(theta)
@@ -170,6 +172,8 @@ class EOM:
             _,
             v_in_plane,
         ) = self.compute_angle_of_attack(phi, theta, velocity)
+        # TODO: Does not guard against v_is_in_plane ~0
+        # SEE: https://github.com/crzdg/flying-discs/pull/16#discussion_r2991607316
         zhat: np.ndarray = rotation_matrix[2]
         xhat: np.ndarray = v_in_plane / np.linalg.norm(v_in_plane)
         yhat = np.cross(zhat, xhat)
@@ -201,6 +205,8 @@ class EOM:
         geometric_quantities: _GeometricQuantitiesResult,
     ) -> _ForcesResult:
         """Computes the lift, drag, and gravitational forces on the disc."""
+        # TODO: Does not handle || velocity || = 0.
+        # SEE: https://github.com/crzdg/flying-discs/pull/16#discussion_r2991607198
         vhat = velocity / np.linalg.norm(velocity)
         force_amplitude = self.force_per_v2 * (velocity @ velocity)
         # Compute the lift and drag forces

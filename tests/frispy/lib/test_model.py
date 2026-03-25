@@ -50,11 +50,11 @@ class TestModel(TestCase):
         self.model.PTxwx = 1
         self.model.PTxwz = 1
         cx = self.model.x(wx, 0)
-        # Linear, stricly increasing
+        # Linear, strictly increasing
         for i in range(1, len(cx)):
             assert cx[i] - cx[i - 1] > 0
         cx = self.model.x(0, wz)
-        # Linear, stricly increasing
+        # Linear, strictly increasing
         for i in range(1, len(cx)):
             assert cx[i] - cx[i - 1] > 0
 
@@ -65,11 +65,11 @@ class TestModel(TestCase):
         self.model.PTywy = 1
         self.model.PTya = 1
         cy = self.model.y(alphas, 0)
-        # Linear, stricly increasing
+        # Linear, strictly increasing
         for i in range(1, len(cy)):
             assert cy[i] - cy[i - 1] > 0
         cy = self.model.y(0, wy)
-        # Linear, stricly increasing
+        # Linear, strictly increasing
         for i in range(1, len(cy)):
             assert cy[i] - cy[i - 1] > 0
         # Intercept
@@ -79,7 +79,7 @@ class TestModel(TestCase):
         wz = np.linspace(-1, 1)
         self.model.PTzwz = 1
         cz = self.model.z(wz)
-        # Linear, stricly increasing
+        # Linear, strictly increasing
         for i in range(1, len(cz)):
             assert cz[i] - cz[i - 1] > 0
         # Intercept
