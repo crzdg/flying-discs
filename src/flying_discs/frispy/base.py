@@ -1,13 +1,12 @@
 from dataclasses import dataclass
 
-from frispy.disc import Disc
-
 from flying_discs.frispy.constants import Constants
 from flying_discs.frispy.coordinates import FrispyPosition, FrispyTrajectory
+from flying_discs.frispy.lib.disc import Disc
 
 
 @dataclass
-class FrispyTrhow:
+class FrispyThrow:
     # pylint: disable=too-many-instance-attributes
     trajectory: FrispyTrajectory
     constans: Constants
@@ -25,12 +24,11 @@ class FrispyTrhow:
 
 
 class FrispyCalculator:
-    # pylint: disable=too-many-instance-attributes
     def __init__(self, constants: Constants) -> None:
         self.constants = constants
 
     def calculate_trajectory(
-        # pylint: disable=too-many-arguments,too-many-locals
+        # pylint: disable=too-many-arguments, too-many-locals, too-many-positional-arguments
         self,
         initial_position: FrispyPosition,
         vx0: float,
