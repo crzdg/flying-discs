@@ -1,6 +1,5 @@
 ---
 name: Release
-
 on:
   push:
     tags: 
@@ -12,35 +11,47 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
-          token: ${{ secrets.REPO_TOKEN }}
+          fetch-depth: 0
           submodules: true
 
+      - name: Check if tag is on main branch
+        id: check_main
+        run: |
+          TAG_SHA=$(git rev-list -n 1 ${{ github.ref }})
+          if git merge-base --is-ancestor $TAG_SHA origin/main; then
+            echo "on_main=true" >> $GITHUB_OUTPUT
+            echo "✓ Tag is on main branch"
+          else
+            echo "on_main=false" >> $GITHUB_OUTPUT
+            echo "⚠ Tag is NOT on main branch - will build but skip publish"
+          fi
+
       - name: Setup python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.9"
+          python-version: "3.10"
 
       - name: Install python dependencies
-        run: pip install ".[ci]" 
-
-      - name: Build changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v3
-        with:
-          commitMode: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: pip install ".[ci]"
 
       - name: Make build
         run: hatch build
 
       - name: Publish
+        if: steps.check_main.outputs.on_main == 'true'
         run: hatch publish -r main -u __token__ -a ${{ secrets.PYPI }}
 
+      - name: Build changelog
+        if: steps.check_main.outputs.on_main == 'true'
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create release
-        uses: softprops/action-gh-release@v1
+        if: steps.check_main.outputs.on_main == 'true'
+        uses: softprops/action-gh-release@v2
         with:
-          token: ${{ secrets.REPO_TOKEN }}
           body: ${{ steps.github_release.outputs.changelog }}

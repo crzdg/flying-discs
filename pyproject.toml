@@ -62,15 +62,13 @@ jupyter = [
     "matplotlib"
 ]
 
+### BUILD ##
 [build-system]
 requires = ["hatchling", "hatch-regex-commit"]
 build-backend = "hatchling.build"
 
-[tool.hatch.build.targets.sdist]
-exclude = [
-    "/.github",
-    "/docs",
-]
+[tool.hatch.build]
+include = ["src/flying_discs", "version.py", "LICENSE", "README.md"]
 
 [tool.hatch.build.targets.wheel]
 packages = [
@@ -93,7 +91,7 @@ scripts.check = [
   "isort --check-only --diff src/"
 ]
 scripts.fmt = [
-  "black --target-version py10 src/",
+  "black --target-version py310 src/",
   "isort src/"
 ]
 
