@@ -134,3 +134,5 @@ dmypy.json
 .coverage.xml
 *.svg
 .virtual_documents/
+!src/flying_discs/frispy/lib
+!tests/frispy/lib

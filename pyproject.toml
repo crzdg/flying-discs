@@ -5,19 +5,23 @@ license = "LGPL-3.0-only"
 license-files = { paths = ["LICENSE"] }
 readme = "README.md"
 description = "Implementation of physical models for flying sport discs."
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
     { name = "Reto Barmettler"},
 ]
 dependencies = [
-    "numpy>=1.22.0",
-    "frispy"
+    "numpy<2.3.0; python_version <= '3.10'",
+    "scipy<1.16.0; python_version <= '3.10'",
+    "numpy; python_version > '3.10'",
+    "scipy; python_version > '3.10'",
 ]
 classifiers =[
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
 ]
@@ -80,15 +84,16 @@ version.tag_sign = false
 
 
 [tool.hatch.envs.style]
+python = "3.14"
 features = [
     "style"
 ]
 scripts.check = [
-  "- black --check --diff src/",
+  "- black --target-version py310 --check --diff src/",
   "isort --check-only --diff src/"
 ]
 scripts.fmt = [
-  "black src/",
+  "black --target-version py10 src/",
   "isort src/"
 ]
 
@@ -100,7 +105,7 @@ scripts.lint = "pylint --recursive=True src/"
 
 [[tool.hatch.envs.lint.matrix]]
 python = [
-    "311"
+    "310", "311", "312", "313", "314"
 ]
 
 [tool.hatch.envs.type]
@@ -111,7 +116,7 @@ scripts.typing = "mypy src/"
 
 [[tool.hatch.envs.type.matrix]]
 python = [
-    "39", "310", "311"
+    "310", "311", "312", "313", "314"
 ]
 
 [tool.hatch.envs.test]
@@ -123,10 +128,11 @@ scripts.no-cov = "cov --no-cov {args}"
 
 [[tool.hatch.envs.test.matrix]]
 python = [
-    "39", "310", "311"
+    "310", "311", "312", "313", "314"
 ]
 
 [tool.hatch.envs.tools]
+python = "3.10"
 scripts.update = "pip-compile {args} pyproject.toml"
 dependencies = [
     "pip-tools"
