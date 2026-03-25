@@ -25,7 +25,7 @@ jobs:
         run: pip install ".[ci]" 
 
       - name: Run tests with coverage
-        run: hatch run test:cov
+        run: hatch run dev:cov
 
       - name: Create coverage badge
         run: genbadge coverage -i .coverage.xml
