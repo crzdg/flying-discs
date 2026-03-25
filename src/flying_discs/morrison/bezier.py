@@ -97,7 +97,6 @@ class MorrisonBezierCalculator:
         factor: float,
         deltaT: float,
     ) -> MorrisonBezierThrow:
-        # pylint: disable=too-many-locals
         linear_throw = self._linear_calculator.calculate_trajectory(
             initial_position, v0, angle_of_attack, direction_angle, deltaT
         )

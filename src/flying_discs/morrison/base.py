@@ -18,7 +18,6 @@ class MorrisonBaseThrow:
 
 
 class MorrisonBaseCalculator:
-    # pylint: disable = invalid-name,too-many-instance-attributes,too-many-locals
     def __init__(self, constants: Constants) -> None:
         self.constants = constants
 
