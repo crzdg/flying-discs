@@ -14,6 +14,9 @@ class Constants(ABC):
     MASS: float = 0.175  # kg
     RH0: float = 1.225  # air density, kg / m ^ 3
     GRAVITY: float = 9.81  # m / s ^ 2
+    # TODO: Handle this instaition and possible overwrites of the instance,
+    # potentially breaking the desired immutability of the constants.
+    # SEE: https://github.com/crzdg/flying-discs/pull/16#discussion_r2991607127
     MODEL: frispy_model = frispy_model()
     EOM: Type = frispy_eom
 

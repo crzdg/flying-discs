@@ -50,7 +50,7 @@ class MorrisonLinearCalculator:
         for i, base_position in enumerate(base_trajectory):
             if i == 0:
                 linear_trajectory.append(
-                    self._calcualte_initial_trajectory_step(initial_position, base_position, direction_angle)
+                    self._calculate_initial_trajectory_step(initial_position, base_position, direction_angle)
                 )
                 continue
             linear_trajectory.append(
@@ -68,7 +68,7 @@ class MorrisonLinearCalculator:
         )
 
     @staticmethod
-    def _calcualte_initial_trajectory_step(
+    def _calculate_initial_trajectory_step(
         initial_position: MorrisonPosition3D, base_position: MorrisonPosition2D, direction_angle: float
     ) -> MorrisonPosition3D:
         return MorrisonPosition3D(
@@ -127,6 +127,8 @@ class MorrisonLinearCalculator:
                     [trajectory[-1].x, trajectory[-1].y],
                 )
             )
+            # TODO: Handle non zero for initial x/y position on non-zero
+            # See: https://github.com/crzdg/flying-discs/pull/16#discussion_r2991607092
             d_ = np.array([np.linalg.norm([p.x, p.y]) for p in trajectory])
             idx = np.where(d_ > dist)[0]
             if idx.size > 0:
