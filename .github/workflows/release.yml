@@ -9,24 +9,14 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
           submodules: true
-
-      - name: Check if tag is on main branch
-        id: check_main
-        run: |
-          TAG_SHA=$(git rev-list -n 1 ${{ github.ref }})
-          if git merge-base --is-ancestor $TAG_SHA origin/main; then
-            echo "on_main=true" >> $GITHUB_OUTPUT
-            echo "✓ Tag is on main branch"
-          else
-            echo "on_main=false" >> $GITHUB_OUTPUT
-            echo "⚠ Tag is NOT on main branch - will build but skip publish"
-          fi
 
       - name: Setup python
         uses: actions/setup-python@v6
@@ -40,18 +30,15 @@ jobs:
         run: hatch build
 
       - name: Publish
-        if: steps.check_main.outputs.on_main == 'true'
         run: hatch publish -r main -u __token__ -a ${{ secrets.PYPI }}
 
       - name: Build changelog
-        if: steps.check_main.outputs.on_main == 'true'
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create release
-        if: steps.check_main.outputs.on_main == 'true'
         uses: softprops/action-gh-release@v2
         with:
           body: ${{ steps.github_release.outputs.changelog }}
