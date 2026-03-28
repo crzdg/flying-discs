@@ -1,12 +1,12 @@
-from dataclasses import dataclass, field
-from typing import Any, Dict, Tuple, Type
+from dataclasses import dataclass
+from typing import Any, Dict, Tuple
 
 import numpy as np
 from scipy.integrate import solve_ivp
 from scipy.optimize import OptimizeResult
 
-from flying_discs.frispy.lib.eom import EOM
-from flying_discs.frispy.lib.model import Model
+from flying_discs.frispy.scipy_backend.eom import EOM
+from flying_discs.frispy.scipy_backend.model import Model
 
 
 @dataclass
@@ -44,33 +44,50 @@ class Disc:
         eom: equations of motion
     """
 
-    x: float = 0  # m
-    y: float = 0  # m
-    z: float = 1.0  # m
-    vx: float = 10.0  # m / s
-    vy: float = 0  # m / s
-    vz: float = 0  # m / s
-    phi: float = 0  # rad
-    theta: float = 0  # rad
-    gamma: float = 0  # rad
-    dphi: float = 0  # rad / sec
-    dtheta: float = 0  # rad / sec
-    dgamma: float = 62.0  # rad / sec
-    area: float = 0.058556  # m ^ 2
-    I_xx: float = 0.001219  # kg * m ^ 2
-    I_zz: float = 0.002352  # kg * m ^ 2
-    mass: float = 0.175  # kg
-    air_density: float = 1.225  # kg / m ^ 3
-    g: float = 9.81  # m / s ^ 2
-    model: Model = field(default_factory=Model)
-    eom_class: Type = EOM
+    def __init__(
+        self,
+        area: float = 0.058556,
+        I_xx: float = 0.001219,
+        I_zz: float = 0.002352,
+        mass: float = 0.175,
+        air_density: float = 1.225,
+        g: float = 9.81,
+    ) -> None:
+        self.area = area
+        self.I_xx = I_xx
+        self.I_zz = I_zz
+        self.mass = mass
+        self.air_density = air_density
+        self.g = g
+        self.model = Model()
+        self.eom = EOM(
+            area=self.area,
+            I_xx=self.I_xx,
+            I_zz=self.I_zz,
+            mass=self.mass,
+            air_density=self.air_density,
+            g=self.g,
+        )
 
     def compute_trajectory(
         self,
+        x: float = 0.0,
+        y: float = 0.0,
+        z: float = 1.0,
+        vx: float = 10.0,
+        vy: float = 0.0,
+        vz: float = 0.0,
+        phi: float = 0.0,
+        theta: float = 0.0,
+        gamma: float = 0.0,
+        dphi: float = 0.0,
+        dtheta: float = 0.0,
+        dgamma: float = 62.0,
         flight_time: float = 3.0,
         n_times: int = 100,
         **solver_kwargs: Any,
     ) -> Tuple[Dict[str, np.ndarray], OptimizeResult]:
+        # pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals
         """Call the differential equation solver to compute the trajectory.
 
         The kinematic variables and timesteps are saved
@@ -102,34 +119,23 @@ class Disc:
         t_span: tuple[float, float] = solver_kwargs.pop("t_span", (0, flight_time))
         t_eval = solver_kwargs.pop("t_eval", np.linspace(t_span[0], t_span[1], n_times))
 
-        # Instantiate the equations of motion
-        eom = self.eom_class(
-            model=self.model,
-            area=self.area,
-            I_xx=self.I_xx,
-            I_zz=self.I_zz,
-            mass=self.mass,
-            air_density=self.air_density,
-            g=self.g,
-        )
-
         # Call the solver
         result = solve_ivp(
-            fun=eom.compute_derivatives,
+            fun=self.eom.compute_derivatives,
             t_span=t_span,
             y0=[
-                self.x,
-                self.y,
-                self.z,
-                self.vx,
-                self.vy,
-                self.vz,
-                self.phi,
-                self.theta,
-                self.gamma,
-                self.dphi,
-                self.dtheta,
-                self.dgamma,
+                x,
+                y,
+                z,
+                vx,
+                vy,
+                vz,
+                phi,
+                theta,
+                gamma,
+                dphi,
+                dtheta,
+                dgamma,
             ],
             t_eval=t_eval,
             **solver_kwargs,

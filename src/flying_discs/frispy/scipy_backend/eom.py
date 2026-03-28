@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from flying_discs.frispy.lib.model import Model
+from flying_discs.frispy.scipy_backend.model import Model
 
 
 @dataclass
