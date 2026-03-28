@@ -10,14 +10,12 @@ authors = [
     { name = "Reto Barmettler"},
 ]
 dependencies = [
-    "numpy<2.3.0; python_version <= '3.10'",
-    "scipy<1.16.0; python_version <= '3.10'",
-    "numpy; python_version > '3.10'",
-    "scipy; python_version > '3.10'",
+    "numpy==2.*",
+    "scipy==1.*",
+    "diffrax==0.*"
 ]
 classifiers =[
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -33,6 +31,9 @@ allow-direct-references = true
 Source = "https://github.com/crzdg/flying-discs"
 
 [project.optional-dependencies]
+gpu = [
+    "jax[cuda12]"
+]
 dev = [
     "hatch",
 ]
@@ -87,7 +88,7 @@ features = [
     "style"
 ]
 scripts.check = [
-  "- black --target-version py310 --check --diff src/",
+  "- black --target-version py311 --check --diff src/",
   "isort --check-only --diff src/"
 ]
 scripts.fmt = [
@@ -106,11 +107,11 @@ scripts.no-cov = "cov --no-cov {args}"
 
 [[tool.hatch.envs.dev.matrix]]
 python = [
-    "310", "311", "312", "313", "314"
+    "311", "312", "313", "314"
 ]
 
 [tool.hatch.envs.tools]
-python = "3.10"
+python = "3.11"
 scripts.update = "pip-compile {args} pyproject.toml"
 dependencies = [
     "pip-tools"

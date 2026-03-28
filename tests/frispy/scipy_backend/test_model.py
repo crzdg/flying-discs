@@ -6,7 +6,7 @@ from unittest import TestCase
 
 import numpy as np
 
-from flying_discs.frispy.lib.model import Model
+from flying_discs.frispy.scipy_backend.model import Model
 
 
 class TestModel(TestCase):

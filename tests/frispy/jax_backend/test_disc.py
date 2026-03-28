@@ -1,17 +1,11 @@
 import numpy as np
 
-from flying_discs.frispy.lib.disc import Disc
+from flying_discs.frispy.jax_backend.disc import Disc
 
 
 def test_smoke():
     d = Disc()
     assert d is not None
-
-
-def test_disc_has_properties():
-    d = Disc()
-    assert hasattr(d, "model")
-    assert hasattr(d, "eom_class")
 
 
 def test_physical_attribute_kwarg():

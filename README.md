@@ -21,8 +21,10 @@ This project can be used by researchers, sports enthusiasts, and anyone interest
 The base model for calculation of a flying discs trajectory. The model was researched by L.Hannah in [L. Hannah, Constraining Frisbee Tracking Methods Through Bayesian Analysis of Flying Disc Models 2017.]
 She and her initiator T. McClintock initial published the code in the repository [Frisbee_Simulator](https://github.com/tmcclintock/Frisbee_Simulator). Recently this was re-written in a Python library [FrisPy](https://github.com/tmcclintock/FrisPy). The library solves the models ODE, allowing for increased parameterizations and precision.
 
-As the FrisPy library is not actively maintained this repository includes refactored code under [flying_discs.frispy.lib](src/flying_discs/frispy/lib) and [tests](tests/frispy/lib).
+As the FrisPy library is not actively maintained this repository includes refactored code under [flying_discs.frispy.scipy_backend](src/flying_discs/frispy/scipy_backend) and [tests](tests/frispy/scipy_backend).
 Kudos to T. McClintock(https://www.linkedin.com/in/t-mcclintock) for his work on the FrisPy library.
+
+I added a faster version by adopting the ODE FrisPy library using JAX as solving backend. Found in [flying_discs.frispy.jax_backend](src/flying_discs/frispy/jax_backend). A comparison notebook can be found under [notebooks](notebooks/frispy-jax-comparison.ipynb).
 
 #### V. Morrison, “The physics of frisbees” Mount Allison University Physics Department, vol. 1, 2005.
 
