@@ -1,4 +1,4 @@
-from typing import Any, Dict, Tuple
+from typing import Any
 
 import diffrax
 import equinox as eqx
@@ -21,6 +21,9 @@ class Disc(eqx.Module):
     g: float
     model: Model
     eom: EOM
+    _term: diffrax.ODETerm
+    _solver: diffrax.AbstractSolver = eqx.field(static=True)
+    _stepsize_controller: diffrax.AbstractStepSizeController = eqx.field(static=True)
 
     def __init__(
         self,
@@ -47,6 +50,9 @@ class Disc(eqx.Module):
             air_density=self.air_density,
             g=self.g,
         )
+        self._term = diffrax.ODETerm(self.eom.compute_derivatives)  # type: ignore
+        self._solver = diffrax.Dopri5()
+        self._stepsize_controller = diffrax.PIDController(rtol=1e-3, atol=1e-6)
 
     # pylint: disable=duplicate-code
     def compute_trajectory(
@@ -66,7 +72,7 @@ class Disc(eqx.Module):
         flight_time: float = 3.0,
         n_times: int = 100,
         **solver_kwargs: Any,
-    ) -> Tuple[Dict[str, jnp.ndarray], Solution]:
+    ) -> tuple[dict[str, jnp.ndarray], Solution]:
         # pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals
         """Call the Diffrax differential equation solver to compute the trajectory."""
 
@@ -90,33 +96,12 @@ class Disc(eqx.Module):
             ]
         )
 
-        # ---------------------------------------------------------
-        # Diffrax Solver Setup
-        # ---------------------------------------------------------
-        # TODO: Fix types for ODETerm, works for now
-        term = diffrax.ODETerm(self.eom.compute_derivatives)  # type: ignore
-        solver = diffrax.Dopri5()
-        saveat = diffrax.SaveAt(ts=t_eval)
-        stepsize_controller = diffrax.PIDController(rtol=1e-3, atol=1e-6)
-
-        result = diffrax.diffeqsolve(
-            term,
-            solver,
-            t0=t_span[0],
-            t1=t_span[1],
-            dt0=None,
-            y0=y0,
-            saveat=saveat,
-            stepsize_controller=stepsize_controller,
-            args=None,  # Args are optional in Diffrax, we baked parameters into `eom` PyTree
-            **solver_kwargs,
-        )
-
-        # result.ys will have shape (n_times, 12). We slice it out to match the original dict.
-        ys = result.ys
+        result = self._solve(t_span, t_eval, y0)
+        ts: jnp.ndarray = result.ts  # type: ignore
+        ys: jnp.ndarray = result.ys  # type: ignore
         return (
             {
-                "times": result.ts,
+                "times": ts,
                 "x": ys[:, 0],
                 "y": ys[:, 1],
                 "z": ys[:, 2],
@@ -132,3 +117,23 @@ class Disc(eqx.Module):
             },
             result,
         )
+
+    @eqx.filter_jit
+    def _solve(self, t_span: jnp.ndarray, t_eval: jnp.ndarray, y0: jnp.ndarray) -> Solution:
+        # TODO: Fix types for ODETerm, works for now
+        # term = diffrax.ODETerm(self.eom.compute_derivatives)  # type: ignore
+
+        saveat = diffrax.SaveAt(ts=t_eval)
+
+        result: Solution = diffrax.diffeqsolve(
+            self._term,
+            self._solver,
+            t0=t_span[0],
+            t1=t_span[1],
+            dt0=None,
+            y0=y0,
+            saveat=saveat,
+            stepsize_controller=self._stepsize_controller,
+            args=None,
+        )
+        return result

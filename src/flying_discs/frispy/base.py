@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, TypedDict
 
-import equinox as eqx
 import jax
-import jax.numpy as jnp
 import numpy as np
 
 from flying_discs.frispy.constants import Constants
@@ -27,12 +25,6 @@ class ODEKwargs(TypedDict):
     dgamma: float
     flight_time: float
     n_times: int
-
-
-@eqx.filter_jit
-def run_jax_sim(d: JAXDisc, kwargs: ODEKwargs, solver_kwargs: dict[str, Any]) -> dict[str, jnp.ndarray]:
-    res, _ = d.compute_trajectory(**kwargs, **solver_kwargs)
-    return res
 
 
 @dataclass
@@ -133,7 +125,7 @@ class FrispyCalculator:
         solver_kwargs: dict[str, Any] = {}
 
         if self._use_jax and isinstance(self._disc, JAXDisc):
-            jax_result = run_jax_sim(self._disc, kwargs, solver_kwargs)
+            jax_result, _ = self._disc.compute_trajectory(**kwargs)
             result = {k: np.asarray(v) for k, v in jax_result.items()}
         else:
             scipy_result, _ = self._disc.compute_trajectory(**kwargs, **solver_kwargs)
